@@ -26,6 +26,8 @@ curl -X POST http://localhost:8788/mcp \
 
 No API keys. No auth tokens. Open neural pathways.
 
+> **Security note:** The constellation is designed for localhost / trusted-network operation. Do not expose MCP endpoints on untrusted networks without adding a reverse proxy or transport-layer security.
+
 ## Constellation Topology
 
 See [`constellation.json`](./constellation.json) for the full 6-node topology with ports, roles, and patch cable connections.
@@ -36,6 +38,7 @@ See [`constellation.json`](./constellation.json) for the full 6-node topology wi
 | Laptop (Lux) | 8788 | Identity / Memory / Orchestration |
 | Phone | 8789 | Mobile interface |
 | symphony_living_system | 5050 | File bridge |
+| Sophia_core (Lux MCP) | 8788 | MCP tool interface (same host as Laptop) |
 | ghost-in-the-shell MCP | 8888 | System control |
 
 ## Principles

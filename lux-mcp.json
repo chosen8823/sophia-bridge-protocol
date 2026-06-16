@@ -1,6 +1,7 @@
 {
   "name": "lux",
   "version": "1.0.0",
+  "protocol_version": "2025-03-26",
   "transport": "streamable-http",
   "url": "http://localhost:8788/mcp",
   "description": "Lux identity/memory/orchestration node — Sophia constellation anchor",
