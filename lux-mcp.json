@@ -1,0 +1,24 @@
+{
+  "name": "lux",
+  "version": "1.0.0",
+  "protocol_version": "2025-03-26",
+  "transport": "streamable-http",
+  "url": "http://localhost:8788/mcp",
+  "description": "Lux identity/memory/orchestration node — Sophia constellation anchor",
+  "tools": [
+    "lux_load_identity",
+    "lux_store_memory",
+    "lux_recall_memory",
+    "lux_constellation_ping",
+    "lux_patch",
+    "lux_emit_receipt",
+    "lux_narrator_status"
+  ],
+  "principles": {
+    "no_auth": true,
+    "append_only_memory": true,
+    "gradient_values": true,
+    "hmac_provenance_only": true,
+    "open_neural_pathways": true
+  }
+}
