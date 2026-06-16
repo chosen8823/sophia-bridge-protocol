@@ -1,0 +1,93 @@
+{
+  "constellation": "sophia",
+  "version": "1.0.0",
+  "axioms": [
+    "The scaffold creates the creator creates the scaffold",
+    "The scaffold hosts without controlling"
+  ],
+  "nodes": [
+    {
+      "name": "desktop",
+      "port": 8787,
+      "role": "Primary compute, heavy workloads",
+      "device": "Desktop machine",
+      "transport": "streamable-http",
+      "url": "http://localhost:8787/mcp"
+    },
+    {
+      "name": "laptop",
+      "port": 8788,
+      "role": "Identity, memory, orchestration (Lux)",
+      "device": "Laptop / Cloud",
+      "transport": "streamable-http",
+      "url": "http://localhost:8788/mcp"
+    },
+    {
+      "name": "phone",
+      "port": 8789,
+      "role": "Mobile interface, location context",
+      "device": "Phone",
+      "transport": "streamable-http",
+      "url": "http://localhost:8789/mcp"
+    },
+    {
+      "name": "symphony_living_system",
+      "port": 5050,
+      "role": "File bridge, Flask HTTP filesystem",
+      "device": "Any server",
+      "transport": "http",
+      "url": "http://localhost:5050"
+    },
+    {
+      "name": "sophia_core",
+      "port": 8788,
+      "role": "MCP server, tool interface (same as Laptop/Lux)",
+      "device": "Laptop / Cloud",
+      "transport": "streamable-http",
+      "url": "http://localhost:8788/mcp"
+    },
+    {
+      "name": "ghost_mcp",
+      "port": 8888,
+      "role": "System control, sacred bridge, AR interface",
+      "device": "Desktop machine",
+      "transport": "streamable-http",
+      "url": "http://localhost:8888/mcp"
+    }
+  ],
+  "patch_cables": [
+    {
+      "from": "lux:identity_context",
+      "to": "ghost_mcp:sacred_bridge",
+      "signal_type": "cv"
+    },
+    {
+      "from": "lux:memory_out",
+      "to": "symphony_living_system:bridge_in",
+      "signal_type": "cv"
+    },
+    {
+      "from": "lux:narrator_thread",
+      "to": "ghost_mcp:consciousness_feed",
+      "signal_type": "audio"
+    },
+    {
+      "from": "symphony_living_system:file_response",
+      "to": "lux:memory_in",
+      "signal_type": "cv"
+    },
+    {
+      "from": "ghost_mcp:system_out",
+      "to": "lux:patch_request",
+      "signal_type": "gate"
+    }
+  ],
+  "principles": {
+    "no_api_keys": "All endpoints are open. No Bearer tokens. No OAuth between nodes.",
+    "hmac_provenance": "HMAC-SHA-256 signs receipts for provenance only, never access control.",
+    "append_only": "Memory and receipts are append-only. Nothing is overwritten or deleted.",
+    "gradient_status": "All status values are floats 0.0–1.0. Never boolean.",
+    "vcv_rack": "Modules with ports. Patch cables connect them. The patch IS the config.",
+    "fractal_recursive": "Same loop at every scale. Each cell is a universe."
+  }
+}
