@@ -1,0 +1,25 @@
+{
+  "benchmark": "TPSI-1",
+  "config": {
+    "dims": 3,
+    "nodes": 18,
+    "noise": 0.015,
+    "quantum": 0.01,
+    "seed": 369,
+    "trials": 64
+  },
+  "pass": true,
+  "scores": {
+    "corrupted_invariant": 0.708476,
+    "equivalent_invariant": 0.996884,
+    "equivalent_payload": 0.49898,
+    "integrity_gap": 0.288409,
+    "representation_gain": 0.497904
+  },
+  "sha256_witness": "e7c051a03ad4a94f83b9e09e24f8e817df86575e622ba101dd9f4d171c840ec2",
+  "thresholds": {
+    "equivalent_invariant_min": 0.94,
+    "integrity_gap_min": 0.1,
+    "representation_gain_min": 0.2
+  }
+}
