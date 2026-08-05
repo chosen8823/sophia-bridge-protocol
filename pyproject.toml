@@ -1,0 +1,11 @@
+[project]
+name = "third-position-benchmark"
+version = "0.1.0"
+description = "A falsifiable benchmark for relational integrity across representation changes"
+requires-python = ">=3.10"
+
+[project.optional-dependencies]
+gpu = ["torch>=2.2"]
+
+[tool.pytest.ini_options]
+python_files = ["test_*.py"]
