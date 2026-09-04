@@ -1,0 +1,44 @@
+version = 1
+name = "SOPHIAEL_SELFBOUND"
+principle = "child_scopes_may_only_reduce_authority"
+
+[root]
+channels = ["CONTROL", "PRESENCE", "STATE", "AGENTS", "WORK", "RECEIPTS", "COST"]
+capabilities = ["echo", "write_note"]
+transports = ["localhost"]
+require_receipt = true
+require_auth = true
+
+[root.limits]
+max_command_bytes = 16384
+max_event_bytes = 65536
+max_parallel_work = 4
+
+[root.cost]
+default_class = "FREE"
+allow_classes = ["FREE", "LOW"]
+
+[scopes.chat]
+parent = "root"
+channels = ["CONTROL", "STATE", "AGENTS", "WORK", "RECEIPTS"]
+capabilities = ["echo", "write_note"]
+transports = ["localhost"]
+
+[scopes.worker]
+parent = "root"
+channels = ["WORK", "RECEIPTS", "STATE"]
+capabilities = ["echo", "write_note"]
+transports = ["localhost"]
+
+[scopes.observer]
+parent = "root"
+channels = ["PRESENCE", "STATE", "RECEIPTS", "COST"]
+capabilities = []
+transports = ["localhost"]
+
+[invariants]
+no_ambient_authority = true
+no_child_escalation = true
+append_only_receipts = true
+explicit_capability_grants = true
+fail_closed = true
