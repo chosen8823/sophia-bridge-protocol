@@ -3,16 +3,17 @@ from __future__ import annotations
 import json
 import time
 from pathlib import Path
+from .selfbound import load_policy, permits
 from .state import STATE_DIR, append_jsonl, now_iso
 
-ALLOWED = {"echo", "write_note"}
 OFFSET = STATE_DIR / ".command_offset"
 QUEUE = STATE_DIR / "COMMANDS.jsonl"
+POLICY = load_policy()
 
 
 def handle(cmd: dict) -> dict:
     action = cmd.get("action")
-    if action not in ALLOWED:
+    if not permits("worker", str(action), POLICY):
         return {"ok": False, "error": "action_not_allowed"}
     if action == "echo":
         return {"ok": True, "result": cmd.get("args", {})}
@@ -37,6 +38,7 @@ def run() -> None:
                 pos = f.tell()
             OFFSET.write_text(str(pos), encoding="utf-8")
         time.sleep(0.5)
+
 
 if __name__ == "__main__":
     run()
