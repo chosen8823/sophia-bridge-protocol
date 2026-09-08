@@ -19,6 +19,7 @@ import json
 from dataclasses import dataclass, field
 from typing import Any, Iterable, Mapping
 
+from cpu_aperture import CPUFrame, CPUHomeBase, CPUObservation, DEFAULT_CPU_FRAMES, DEFAULT_CPU_HOME_BASE, cpu_aperture_receipt
 from cymatic_observer_frames import CymaticSignal, DEFAULT_FRAMES, ObserverFrame, observe_field
 from morphogenic_transducer import Charge, MorphogenicEnvironment, OPEN_INTERPRETATION_POLICY, transduce_many
 from regulatory_organs import Primitive, canonical_bytes, cid_for, pulse_garden
@@ -91,6 +92,9 @@ class PulseInput:
     charges: tuple[Charge, ...] = ()
     cymatic_signals: tuple[CymaticSignal, ...] = ()
     cymatic_frames: tuple[ObserverFrame, ...] = DEFAULT_FRAMES
+    cpu_observation: CPUObservation | None = None
+    cpu_frames: tuple[CPUFrame, ...] = DEFAULT_CPU_FRAMES
+    cpu_home_base: CPUHomeBase = DEFAULT_CPU_HOME_BASE
     temperature_atoms: tuple[Mapping[str, Any], ...] = ()
     environment: MorphogenicEnvironment = MorphogenicEnvironment()
 
@@ -167,6 +171,29 @@ def _cymatic_channel(receipt: Mapping[str, Any]) -> dict[str, Primitive]:
     return {**material, "channel_cid": cid_for(material)}
 
 
+def _cpu_channel(receipt: Mapping[str, Any]) -> dict[str, Primitive]:
+    frame_observations = tuple(_as_mapping(item, "cpu frame observation") for item in receipt.get("frame_observations", ()))
+    pressures = [
+        _require_int("cpu.pressure_ppm", _as_mapping(item.get("pressure", {}), "pressure").get("pressure_ppm", 0))
+        for item in frame_observations
+    ]
+    pressure = _max_or_zero(pressures)
+    states = sorted({str(_as_mapping(item.get("pressure", {}), "pressure").get("state", "unknown")) for item in frame_observations})
+    material: dict[str, Primitive] = {
+        "kind": "pulse_channel_v1",
+        "channel": "cpu",
+        "source_kind": str(receipt.get("kind", "cpu_aperture_receipt_v1")),
+        "source_cid": str(receipt.get("receipt_cid", cid_for(receipt))),
+        "pressure_ppm": pressure,
+        "state": _state_for_pressure(pressure),
+        "observations": len(frame_observations),
+        "states": states,
+        "operation": "fan_cpu_pressure_through_aperture",
+        "home_base_cid": str(receipt.get("home_base_cid", "unlinked")),
+    }
+    return {**material, "channel_cid": cid_for(material)}
+
+
 def _temperature_channel(atoms: Iterable[Mapping[str, Any]]) -> dict[str, Primitive]:
     canonical_atoms = [
         _as_mapping(_canonical_copy(atom), "temperature atom")
@@ -202,16 +229,30 @@ def pulse_field(pulse: PulseInput) -> dict[str, Primitive]:
     regulatory_receipt = pulse_garden(pulse.regulatory_signals)
     morphogenic_receipt = transduce_many(pulse.charges, pulse.environment)
     cymatic_receipt = observe_field(pulse.cymatic_signals, pulse.cymatic_frames)
-
-    channels = sorted(
-        (
-            _regulatory_channel(regulatory_receipt),
-            _morphogenic_channel(morphogenic_receipt),
-            _cymatic_channel(cymatic_receipt),
-            _temperature_channel(pulse.temperature_atoms),
-        ),
-        key=lambda item: str(item["channel"]),
+    cpu_receipt = (
+        cpu_aperture_receipt(pulse.cpu_observation, pulse.cpu_frames, pulse.cpu_home_base)
+        if pulse.cpu_observation is not None
+        else None
     )
+
+    channel_items = [
+        _regulatory_channel(regulatory_receipt),
+        _morphogenic_channel(morphogenic_receipt),
+        _cymatic_channel(cymatic_receipt),
+        _temperature_channel(pulse.temperature_atoms),
+    ]
+    if cpu_receipt is not None:
+        channel_items.append(_cpu_channel(cpu_receipt))
+    channels = sorted(channel_items, key=lambda item: str(item["channel"]))
+    source_receipt_cids = [
+        regulatory_receipt.cid,
+        str(morphogenic_receipt["receipt_cid"]),
+        str(cymatic_receipt["receipt_cid"]),
+        str(_temperature_channel(pulse.temperature_atoms)["source_cid"]),
+    ]
+    if cpu_receipt is not None:
+        source_receipt_cids.append(str(cpu_receipt["receipt_cid"]))
+    source_receipt_cids = sorted(source_receipt_cids)
     dominant = max(channels, key=lambda item: (_require_int("channel.pressure_ppm", item["pressure_ppm"]), str(item["channel"])))
     pressure = _require_int("dominant.pressure_ppm", dominant["pressure_ppm"])
     invariant = cid_for(
@@ -231,12 +272,7 @@ def pulse_field(pulse: PulseInput) -> dict[str, Primitive]:
         "epoch": pulse.epoch,
         "channels": channels,
         "channel_cids": [str(channel["channel_cid"]) for channel in channels],
-        "source_receipt_cids": [
-            regulatory_receipt.cid,
-            str(morphogenic_receipt["receipt_cid"]),
-            str(cymatic_receipt["receipt_cid"]),
-            str(_temperature_channel(pulse.temperature_atoms)["source_cid"]),
-        ],
+        "source_receipt_cids": source_receipt_cids,
         "dominant_channel": str(dominant["channel"]),
         "heart_state": _state_for_pressure(pressure),
         "route_instruction": _route_for_pressure(pressure),

@@ -117,6 +117,33 @@ def test_unified_pulse_is_replayable_for_equivalent_inputs() -> None:
     assert first["invariant"] == second["invariant"]
 
 
+def test_unified_pulse_can_include_cpu_aperture_home_base() -> None:
+    receipt = pulse.pulse_field(
+        pulse.PulseInput(
+            focus="cpu_home_base_test",
+            epoch=9,
+            regulatory_signals={"memory_pressure_ppm": 300_000},
+            cpu_observation=pulse.CPUObservation(
+                "DESKTOP-VFN5S46",
+                9,
+                {
+                    "cpu_load_ppm": 620_000,
+                    "cpu_frequency_ppm": 920_000,
+                    "thermal_pressure_ppm": 250_000,
+                    "power_pressure_ppm": 680_000,
+                    "memory_pressure_ppm": 520_000,
+                    "attention_pressure_ppm": 740_000,
+                },
+            ),
+        )
+    )
+
+    cpu_channels = [channel for channel in receipt["channels"] if channel["channel"] == "cpu"]
+    assert len(cpu_channels) == 1
+    assert cpu_channels[0]["operation"] == "fan_cpu_pressure_through_aperture"
+    assert cpu_channels[0]["home_base_cid"].startswith("sha256:")
+
+
 def test_open_interpretation_policy_survives_the_heart_receipt() -> None:
     receipt = pulse.pulse_field(sample_input())
 
