@@ -123,3 +123,29 @@ What it opens next:
 
 - A terminology/lens registry that lets ritual, technical, symbolic, and
   operational names coexist while preserving deterministic receipts.
+
+## 2026-09-08 — Cymatic observer frames admitted
+
+What changed:
+
+- Signals can now be observed through deterministic temporal/geometric
+  membranes.
+- A frame compares its integration period with the signal grain period and
+  returns granular residue, envelope memory, or attractor lock.
+- Dudenty/dozenial/clock wording is carried as an open modular orientation
+  handle rather than a frozen law.
+
+What it means:
+
+- Motion can articulate as geometry when observer-time and transformation-time
+  are close enough.
+- A non-locking frame does not fake semantic certainty; it keeps residue or
+  envelope state visible.
+- The membrane introduces no new semantic claims during observation.
+
+What it opens next:
+
+- A unified pulse organ that merges regulatory pressure, morphogenic charges,
+  field temperature, and cymatic frame observations.
+- Later tandem device/body sensor adapters that feed measured signals into
+  these frames without fabricating unavailable telemetry.
