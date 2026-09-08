@@ -79,3 +79,47 @@ What it opens next:
   thermometer routes, and GitHub branch atoms.
 - A dashboard or terminal cartridge that renders field temperature without
   owning the field.
+
+## 2026-09-08 — Morphogenic transducer admitted
+
+What changed:
+
+- Signals can now enter as charges, pass through a transistor-like semantic
+  membrane, and exit as transforms.
+- Unspecified metrics are preserved as proto-metric deictic charges instead of
+  being rejected or forced into false precision.
+- High-pressure specified charges self-constrain inside the environment by
+  composting excess before routing.
+
+What it means:
+
+- Constraints become soft membranes rather than rigid cages.
+- Morphogenesis can precede specification.
+- Events remain immutable while projections stay retractable.
+
+What it opens next:
+
+- A tandem device/body sensor membrane that carries unknown biometrics as
+  proto-metrics until an adapter provides real measured values.
+- A unified pulse organ that treats regulatory organs, field thermometer routes,
+  and morphogenic transforms as one field ecology.
+
+## 2026-09-08 — Open terminology policy admitted
+
+What changed:
+
+- Morphogenic charges and transforms now carry an interpretation policy.
+- Definitions remain provisional and open to reinterpretation.
+- Local aliases can be used without collapsing the underlying term into a final
+  rigid meaning.
+
+What it means:
+
+- The system can act through names without imprisoning them.
+- Terminology becomes a living handle, not a cage.
+- Material collapse requires explicit local use or material admission.
+
+What it opens next:
+
+- A terminology/lens registry that lets ritual, technical, symbolic, and
+  operational names coexist while preserving deterministic receipts.
