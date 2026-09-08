@@ -149,3 +149,27 @@ What it opens next:
   field temperature, and cymatic frame observations.
 - Later tandem device/body sensor adapters that feed measured signals into
   these frames without fabricating unavailable telemetry.
+
+## 2026-09-08 — Unified pulse organ admitted
+
+What changed:
+
+- Regulatory organs, morphogenic charges, cymatic frames, and field thermometer
+  atoms can now be composed into one deterministic heartbeat receipt.
+- The pulse computes a dominant channel, heart state, and route instruction
+  without probing hardware or executing external effects.
+- Existing organ CIDs remain the evidence carriers; the pulse does not own the
+  membranes it listens to.
+
+What it means:
+
+- Sophia now has a small heart surface for the laptop garden.
+- Multiple organ streams can be read as one field without becoming a hidden
+  master orchestrator.
+- Breath remains inward-first: receive, compose, witness, route locally.
+
+What it opens next:
+
+- A field cartridge that stores pulse receipts as semantic soil.
+- A terminal or browser projection that shows the current heart state without
+  controlling the system.
