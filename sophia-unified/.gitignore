@@ -1,0 +1,43 @@
+# Sophia local runtime exclusions
+__pycache__/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+coverage/
+
+# Local secrets and live credentials
+.env
+.env.*
+config/api_keys.json
+config/*secret*
+config/*token*
+*api_key*
+*apikey*
+*secret*
+
+# Local mutable runtime state
+state/
+inbox/
+archive/
+*.pid
+*.log
+*.db
+*.sqlite
+*.sqlite3
+
+# Local packages and generated artefacts
+node_modules/
+dist/
+build/
+*.pyc
+*.pyo
+*.zip
+*.rar
+*.7z
+
+# OS/editor noise
+.DS_Store
+Thumbs.db
+.vscode/
+.vs/
