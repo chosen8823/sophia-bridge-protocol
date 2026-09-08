@@ -37,6 +37,7 @@ jobs:
           PYTEST_DISABLE_PLUGIN_AUTOLOAD: "1"
         run: |
           python -m pytest \
+            sophia-unified/tests/test_field_thermometer.py \
             sophia-unified/tests/test_branch_transform_atom.py \
             sophia-unified/tests/test_filesystem_ingestor.py \
             sophia-unified/tests/test_regulatory_organs.py \

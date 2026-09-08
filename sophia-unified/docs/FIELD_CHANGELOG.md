@@ -54,3 +54,28 @@ What it opens next:
   default branch.
 - Optional persistent engines using Codespaces, self-hosted runners, or cloud
   VMs if the ephemeral membrane is not enough.
+
+## 2026-09-08 — Field thermometer admitted
+
+What changed:
+
+- Filesystem event ledgers can now be translated into semantic temperature
+  atoms.
+- Repeated self-similar events strengthen visible route tissue instead of
+  becoming hidden memory.
+- The thermometer supports one-shot operation and bounded or continuous watch
+  loops.
+
+What it means:
+
+- The system can keep a local pulse over incoming carrier events.
+- Learning is expressed as deterministic route growth, not opaque model state.
+- Replay does not double-grow because processed event CIDs are remembered in
+  the route lattice.
+
+What it opens next:
+
+- A central health/pulse organ that merges regulatory organs, filesystem field,
+  thermometer routes, and GitHub branch atoms.
+- A dashboard or terminal cartridge that renders field temperature without
+  owning the field.
