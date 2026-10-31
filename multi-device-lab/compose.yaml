@@ -1,0 +1,76 @@
+services:
+  hub:
+    build: .
+    command: ["python", "-m", "mesh.hub"]
+    environment:
+      HUB_HOST: "0.0.0.0"
+      HUB_PORT: "8788"
+      DB_PATH: "/data/mesh.db"
+    ports:
+      - "127.0.0.1:8788:8788"
+    volumes:
+      - mesh_state:/data
+    networks:
+      - sophia_mesh
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8788/health', timeout=2)"]
+      interval: 10s
+      timeout: 3s
+      retries: 5
+
+  workstation:
+    build: .
+    command: ["python", "-m", "mesh.node", "--role", "workstation"]
+    environment:
+      HUB_URL: "http://hub:8788"
+      NODE_NAME: "workstation-01"
+      HEARTBEAT_SECONDS: "5"
+    depends_on:
+      hub:
+        condition: service_healthy
+    networks: [sophia_mesh]
+
+  cloud_agent:
+    build: .
+    command: ["python", "-m", "mesh.node", "--role", "cloud-agent"]
+    environment:
+      HUB_URL: "http://hub:8788"
+      NODE_NAME: "cloud-agent-01"
+      HEARTBEAT_SECONDS: "5"
+    depends_on:
+      hub:
+        condition: service_healthy
+    networks: [sophia_mesh]
+
+  audio_node:
+    build: .
+    command: ["python", "-m", "mesh.node", "--role", "audio"]
+    environment:
+      HUB_URL: "http://hub:8788"
+      NODE_NAME: "audio-node-01"
+      HEARTBEAT_SECONDS: "5"
+    depends_on:
+      hub:
+        condition: service_healthy
+    networks: [sophia_mesh]
+
+  memory_node:
+    build: .
+    command: ["python", "-m", "mesh.node", "--role", "memory"]
+    environment:
+      HUB_URL: "http://hub:8788"
+      NODE_NAME: "memory-node-01"
+      HEARTBEAT_SECONDS: "5"
+    depends_on:
+      hub:
+        condition: service_healthy
+    networks: [sophia_mesh]
+
+networks:
+  sophia_mesh:
+    name: sophia_mesh
+    driver: bridge
+    internal: true
+
+volumes:
+  mesh_state:
